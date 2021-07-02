@@ -4,21 +4,22 @@ let qs = require("querystring");
 let server = http.createServer(handleServer);
 
 function handleServer(req, res) {
-    let dataFormat = req.headers["content-type"];
+    
     let store = "";
-    res.on("data", (chunk) => {
+    req.on("data", (chunk) => {
         store += chunk;
     })
 
-    res.on("end", () => {
-        if(dataFormat === "application/json") {
-            var parsedData = JSON.parse(store);
-            console.log(res.end(store));
+    req.on("end", () => {
+        if(req.method === "POST" && req.url === "/json") {
+            console.log(store);
+            res.setHeader("Content-Type", "application/json")
+            res.end(store);
         }
 
-        if(dataFormat === "x-www-form-urlencoded") {
-            var parsedData = qs.parse(store);
-            res.end(JSON.stringify(parsedData));
+        if(req.method === "POST" && req.url === "/form") {
+            res.setHeader("Content-Type", "x-www-form-urlencoded")
+            res.end(store);
         }
     })
 
