@@ -32,7 +32,7 @@ function handleServer(req, res) {
        let parsedUsername =  qs.parse(store).username;
        console.log(parsedUsername);
     //    fs.createReadStream( `${req.url}${parsedUsername}`).pipe(res);
-    fs.readFile("./macha.json", (err, user) => {
+    fs.readFile("./sohailshaik8328.json", (err, user) => {
         res.end(user)
     })
     }
